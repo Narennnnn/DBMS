@@ -61,3 +61,114 @@ CREATE TABLE tablename (
     columnname datatype(size),
     columnname datatype(size)
 );
+
+-- Creating the 'employees' table
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    birth_date DATE,
+    hire_date DATE,
+    department_id INT,
+    salary DECIMAL(10,2)
+);
+
+-- Displaying the table structure
+DESCRIBE employees;
+
+-- Adding a new column 'gender' to the 'employees' table
+ALTER TABLE employees
+ADD COLUMN gender VARCHAR(10);
+
+-- Displaying the updated table structure
+DESCRIBE employees;
+
+-- Modifying the 'salary' column in the 'employees' table
+ALTER TABLE employees
+MODIFY COLUMN salary DECIMAL(12,2);
+
+-- Displaying the updated table structure
+DESCRIBE employees;
+
+-- Dropping the 'department_id' column from the 'employees' table
+ALTER TABLE employees
+DROP COLUMN department_id;
+
+-- Displaying the final table structure
+DESCRIBE employees;
+
+-- Dropping the 'employees' table
+DROP TABLE employees;
+
+-- Creating the 'products' table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    price DECIMAL(10,2),
+    category VARCHAR(50)
+);
+
+-- Displaying the table structure
+DESCRIBE products;
+
+-- Inserting data into the 'products' table
+INSERT INTO products (product_id, product_name, price, category)
+VALUES
+    (1, 'Laptop', 1200.00, 'Electronics'),
+    (2, 'Bookshelf', 150.00, 'Furniture'),
+    (3, 'Coffee Maker', 50.00, 'Appliances');
+
+-- Retrieving data from the 'products' table
+SELECT * FROM products;
+
+-- Updating data in the 'products' table
+UPDATE products
+SET price = 1300.00
+WHERE product_id = 1;
+
+-- Retrieving updated data
+SELECT * FROM products;
+
+-- Deleting data from the 'products' table
+DELETE FROM products
+WHERE product_id = 2;
+
+-- Retrieving remaining data
+SELECT * FROM products;
+
+-- Creating a view based on 'products' table
+CREATE VIEW expensive_products AS
+SELECT * FROM products
+WHERE price > 1000.00;
+
+-- Retrieving data from the view
+SELECT * FROM expensive_products;
+
+-- Starting a transaction
+START TRANSACTION;
+
+-- Performing multiple operations within the transaction
+INSERT INTO products (product_id, product_name, price, category)
+VALUES
+    (4, 'Smartphone', 800.00, 'Electronics');
+
+UPDATE products
+SET price = 160.00
+WHERE product_id = 3;
+
+-- Committing the transaction
+COMMIT;
+
+-- Rolling back the transaction
+ROLLBACK;
+
+-- Granting privileges to a user
+GRANT SELECT, INSERT, UPDATE, DELETE ON products TO 'your_username'@'localhost';
+
+-- Revoking privileges from a user
+REVOKE SELECT ON products FROM 'unauthorized_user'@'localhost';
+
+-- Adding a foreign key constraint
+ALTER TABLE orders
+ADD CONSTRAINT fk_product_id
+FOREIGN KEY (product_id) REFERENCES products(product_id);
