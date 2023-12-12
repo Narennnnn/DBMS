@@ -1,7 +1,1 @@
-sudo systemctl start postgresql-16
-sudo -u postgres psql -c "CREATE USER naren WITH PASSWORD 'pass123';"
-sudo -u postgres psql -c "CREATE DATABASE exchanges_data OWNER naren;"
-sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE exchanges_data TO naren;"
 
-
-psql -U naren -d exchanges_data -h localhost -W
